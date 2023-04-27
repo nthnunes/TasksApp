@@ -8,14 +8,25 @@ import styles from "./style"
 export default function Task({ navigation }){
     const [task, setTask] = useState([])
 
+    function clearAll() {
+        database.collection("Tasks")
+            .where("status", "==", true)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    doc.ref.delete()
+                })
+            })
+    }
+
     function deleteTask(id){
         database.collection("Tasks").doc(id).update({
-            status: true
+            status: false
         })
     }
 
     useEffect(() => {
-        database.collection("Tasks").where("status", "==", false).onSnapshot((query) => {
+        database.collection("Tasks").where("status", "==", true).onSnapshot((query) => {
             const list = []
             query.forEach((doc) => {
                 list.push({...doc.data(), id: doc.id})
@@ -39,7 +50,7 @@ export default function Task({ navigation }){
                                 }}
                             >
                                 <FontAwesome
-                                    name="square-o"
+                                    name="check-square"
                                     size={23}
                                     color="#f92e6a"
                                 />
@@ -60,16 +71,10 @@ export default function Task({ navigation }){
                 }}
             />
             <TouchableOpacity
-                style={styles.buttonCompleted}
-                onPress={() => navigation.navigate("Completed")}
-            >
-                <Text style={styles.iconButton}>✓</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
                 style={styles.buttonNewTask}
-                onPress={() => navigation.navigate("New Task")}
+                onPress={() => clearAll()}
             >
-                <Text style={styles.iconButton}>+</Text>
+                <Text style={styles.iconButton}>🗑</Text>
             </TouchableOpacity>
         </View>
     )

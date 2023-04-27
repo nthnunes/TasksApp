@@ -20,7 +20,7 @@ export default function NewTask({ navigation }){
             <Text style={styles.label}>Description</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Descrição da tarefa..."
+                placeholder="Type a text about your task..."
                 onChangeText={setDescription}
                 value={description}
             />

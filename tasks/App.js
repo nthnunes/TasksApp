@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Task from "./src/pages/Task/"
 import NewTask from "./src/pages/NewTask/"
 import Details from "./src/pages/Details/"
+import Completed from "./src/pages/Completed/"
 
 const Stack = createStackNavigator()
 
@@ -13,7 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Task'>
         <Stack.Screen
-          name="Task"
+          name="Tasks"
           component={Task}
           options={{
             headerTintColor:"#f92e6a"
@@ -29,6 +30,13 @@ export default function App() {
         <Stack.Screen
           name="Details"
           component={Details}
+          options={{
+            headerTintColor:"#f92e6a"
+          }}
+        />
+        <Stack.Screen
+          name="Completed"
+          component={Completed}
           options={{
             headerTintColor:"#f92e6a"
           }}

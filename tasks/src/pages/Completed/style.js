@@ -43,17 +43,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 25,
         fontWeight: "bold"
-    },
-    buttonCompleted:{
-        width: 60,
-        height: 60,
-        position: "absolute",
-        bottom: 135,
-        left: 35,
-        backgroundColor: "#f92e6a",
-        borderRadius: 50,
-        justifyContent: "center",
-        alignItems: "center"
     }
 })
 
