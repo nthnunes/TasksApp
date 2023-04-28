@@ -15,6 +15,9 @@ export default function NewUser({ navigation }){
         .then((userCredential) => {
             let user = userCredential.user
             navigation.navigate("Login", { idUser: user.uid })
+            setEmail("")
+            setPassword("")
+            setErrorRegister(false)
         })
         .catch((error) => {
             setErrorRegister(true)
