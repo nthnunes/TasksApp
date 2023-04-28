@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 40,
     marginBottom: 10,
   },
   title: {
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   deleteTask:{
     justifyContent: "center",
-    paddingLeft: 15
+    paddingLeft: 15,
+    left: 20
   },
   DescriptionTask:{
     width: "75%",
@@ -71,12 +72,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     justifyContent: "center",
-    alignItems: "center"
-  },
-  iconButtonLogout:{
-    color: "#fff",
-    fontSize: 25,
-    fontWeight: "bold"
+    alignItems: "center",
+    marginRight: -5
   }
 });
 
