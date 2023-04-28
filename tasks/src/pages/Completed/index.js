@@ -5,12 +5,12 @@ import firebase from "../../config/firebaseconfig"
 import { FontAwesome } from "@expo/vector-icons"
 import styles from "./style"
 
-export default function Task({ navigation }){
+export default function Task({ navigation, route }){
     const [task, setTask] = useState([])
     const database = firebase.firestore()
 
     function clearAll() {
-        database.collection("Tasks")
+        database.collection(route.params.idUser)
             .where("status", "==", true)
             .get()
             .then((querySnapshot) => {
@@ -21,13 +21,13 @@ export default function Task({ navigation }){
     }
 
     function deleteTask(id){
-        database.collection("Tasks").doc(id).update({
+        database.collection(route.params.idUser).doc(id).update({
             status: false
         })
     }
 
     useEffect(() => {
-        database.collection("Tasks").where("status", "==", true).onSnapshot((query) => {
+        database.collection(route.params.idUser).where("status", "==", true).onSnapshot((query) => {
             const list = []
             query.forEach((doc) => {
                 list.push({...doc.data(), id: doc.id})

@@ -22,7 +22,11 @@ export default function Login({ navigation }){
     }
 
     useEffect(() => {
-
+        firebase.auth().onAuthStateChanged(function(user){
+            if(user){
+                navigation.navigate("Tasks", { idUser: user.uid })
+            }
+        })
     }, [])
 
     return(

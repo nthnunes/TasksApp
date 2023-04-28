@@ -5,18 +5,18 @@ import firebase from "../../config/firebaseconfig"
 import { FontAwesome } from "@expo/vector-icons"
 import styles from "./style"
 
-export default function Task({ navigation }){
+export default function Task({ navigation, route }){
     const [task, setTask] = useState([])
     const database = firebase.firestore()
 
     function deleteTask(id){
-        database.collection("Tasks").doc(id).update({
+        database.collection(route.params.idUser).doc(id).update({
             status: true
         })
     }
 
     useEffect(() => {
-        database.collection("Tasks").where("status", "==", false).onSnapshot((query) => {
+        database.collection(route.params.idUser).where("status", "==", false).onSnapshot((query) => {
             const list = []
             query.forEach((doc) => {
                 list.push({...doc.data(), id: doc.id})
@@ -50,7 +50,8 @@ export default function Task({ navigation }){
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         id: item.id,
-                                        description: item.description
+                                        description: item.description,
+                                        idUser: route.params.idUser
                                     })
                                 }}
                             >
@@ -62,13 +63,13 @@ export default function Task({ navigation }){
             />
             <TouchableOpacity
                 style={styles.buttonCompleted}
-                onPress={() => navigation.navigate("Completed")}
+                onPress={() => navigation.navigate("Completed", { idUser: route.params.idUser })}
             >
                 <Text style={styles.iconButton}>✓</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buttonNewTask}
-                onPress={() => navigation.navigate("New Task")}
+                onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
             >
                 <Text style={styles.iconButton}>+</Text>
             </TouchableOpacity>

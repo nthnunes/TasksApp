@@ -4,16 +4,16 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native"
 import firebase from "../../config/firebaseconfig"
 import styles from "./style"
 
-export default function NewTask({ navigation }){
+export default function NewTask({ navigation, route }){
     const [description, setDescription] = useState(null)
     const database = firebase.firestore()
     
     function addTask(){
-        database.collection("Tasks").add({
+        database.collection(route.params.idUser).add({
             description: description,
             status: false
         })
-        navigation.navigate("Tasks")
+        navigation.navigate("Tasks", { idUser: route.params.idUser })
     }
 
     return(
