@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 
 import firebase from "../../config/firebaseconfig"
-import { FontAwesome } from "@expo/vector-icons"
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from "./style"
 
 export default function Task({ navigation, route }){
     const [task, setTask] = useState([])
     const database = firebase.firestore()
+
+    function logout(){
+        firebase.auth().signOut().then(() => {
+            navigation.navigate("Login")
+        })
+    }
 
     function deleteTask(id){
         database.collection(route.params.idUser).doc(id).update({
@@ -72,6 +78,18 @@ export default function Task({ navigation, route }){
                 onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
             >
                 <Text style={styles.iconButton}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.buttonLogout}
+                onPress={logout}
+            >
+                <Text style={styles.iconButtonLogout}>
+                    <MaterialCommunityIcons
+                        name="location-exit"
+                        size={23}
+                        color="#f92e6a"
+                    />
+                </Text>
             </TouchableOpacity>
         </View>
     )

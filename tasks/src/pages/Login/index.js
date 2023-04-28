@@ -16,7 +16,7 @@ export default function Login({ navigation }){
             let user = userCredential.user
             navigation.navigate("Tasks", { idUser: user.uid })
         })
-        .catch((error) => {
+        .catch(() => {
             setErrorLogin(true)
         })
     }
