@@ -1,6 +1,6 @@
 # Sobre
 
-Projeto para matéria de Desenvolvimento de Sistemas de Informação.
+Projeto para matéria de Mobile Systems.
 
 # Tecnologias
 
