@@ -33,6 +33,19 @@ export default function Task({ navigation, route }){
 
     return(
         <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>Tasks</Text>
+                <TouchableOpacity
+                    style={styles.buttonLogout}
+                    onPress={logout}
+                >
+                    <MaterialCommunityIcons
+                    name="location-exit"
+                    size={23}
+                    color="#f92e6a"
+                    />
+                </TouchableOpacity>
+            </View>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={task}
@@ -78,18 +91,6 @@ export default function Task({ navigation, route }){
                 onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
             >
                 <Text style={styles.iconButton}>+</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonLogout}
-                onPress={logout}
-            >
-                <Text style={styles.iconButtonLogout}>
-                    <MaterialCommunityIcons
-                        name="location-exit"
-                        size={23}
-                        color="#f92e6a"
-                    />
-                </Text>
             </TouchableOpacity>
         </View>
     )
