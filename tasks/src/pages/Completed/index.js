@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 
-import database from "../../config/firebaseconfig"
+import firebase from "../../config/firebaseconfig"
 import { FontAwesome } from "@expo/vector-icons"
 import styles from "./style"
 
 export default function Task({ navigation }){
     const [task, setTask] = useState([])
+    const database = firebase.firestore()
 
     function clearAll() {
         database.collection("Tasks")
