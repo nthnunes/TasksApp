@@ -11,15 +11,13 @@ export default function Login({ navigation }){
     const [errorLogin, setErrorLogin] = useState("")
 
     const loginFirebase = () => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             let user = userCredential.user
-            navigation.navigate("Task", { idUser: user.uid })
+            navigation.navigate("Tasks", { idUser: user.uid })
         })
         .catch((error) => {
             setErrorLogin(true)
-            let errorCode = error.code
-            let errorMessage = error.message
         })
     }
 
@@ -72,13 +70,13 @@ export default function Login({ navigation }){
                 :
                     <TouchableOpacity
                         style={styles.buttonLogin}
-                        onPress={loginFirebase()}
+                        onPress={loginFirebase}
                     >
                         <Text style={styles.textButtonLogin}>Login</Text>
                     </TouchableOpacity>
                 }
                 <Text style={styles.registration}>
-                    Don't have an account?
+                    Don't have an account?{' '}
                     <Text
                         style={styles.linkSubscribe}
                         onPress={() => navigation.navigate("NewUser")}
