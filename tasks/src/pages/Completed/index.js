@@ -52,7 +52,7 @@ export default function Task({ navigation, route }){
                             >
                                 <FontAwesome
                                     name="check-square"
-                                    size={23}
+                                    size={26}
                                     color="#f92e6a"
                                 />
                             </TouchableOpacity>
@@ -75,7 +75,11 @@ export default function Task({ navigation, route }){
                 style={styles.buttonNewTask}
                 onPress={() => clearAll()}
             >
-                <Text style={styles.iconButton}>🗑</Text>
+                <FontAwesome
+                    name="trash"
+                    size={26}
+                    color="#fff"
+                />
             </TouchableOpacity>
         </View>
     )

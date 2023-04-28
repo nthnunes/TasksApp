@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity } from "react-native"
 
+import { FontAwesome } from "@expo/vector-icons"
 import firebase from "../../config/firebaseconfig"
 import styles from "./style"
 
@@ -31,7 +32,11 @@ export default function NewTask({ navigation, route }){
                     addTask()
                 }}
             >
-                <Text style={styles.iconButton}>✓</Text>
+                <FontAwesome
+                    name="check"
+                    size={26}
+                    color="#fff"
+                />
             </TouchableOpacity>
         </View>
     )

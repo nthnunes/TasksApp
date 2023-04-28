@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     },
     deleteTask:{
         justifyContent: "center",
-        paddingLeft: 15
+        paddingLeft: 15,
+        left: 20
     },
     DescriptionTask:{
         width: "75%",

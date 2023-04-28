@@ -60,7 +60,7 @@ export default function Task({ navigation, route }){
                             >
                                 <FontAwesome
                                     name="square-o"
-                                    size={23}
+                                    size={26}
                                     color="#f92e6a"
                                 />
                             </TouchableOpacity>
@@ -84,13 +84,21 @@ export default function Task({ navigation, route }){
                 style={styles.buttonCompleted}
                 onPress={() => navigation.navigate("Completed", { idUser: route.params.idUser })}
             >
-                <Text style={styles.iconButton}>✓</Text>
+                <FontAwesome
+                    name="check"
+                    size={26}
+                    color="#fff"
+                />
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buttonNewTask}
                 onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
             >
-                <Text style={styles.iconButton}>+</Text>
+                <FontAwesome
+                    name="plus"
+                    size={26}
+                    color="#fff"
+                />
             </TouchableOpacity>
         </View>
     )
