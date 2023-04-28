@@ -6,13 +6,30 @@ import Task from "./src/pages/Task/"
 import NewTask from "./src/pages/NewTask/"
 import Details from "./src/pages/Details/"
 import Completed from "./src/pages/Completed/"
+import Login from "./src/pages/Login/"
+import NewUser from "./src/pages/NewUser/"
+
 
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Task'>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="NewUser"
+          component={NewUser}
+          options={{
+            headerShown: false
+          }}
+        />
         <Stack.Screen
           name="Tasks"
           component={Task}
