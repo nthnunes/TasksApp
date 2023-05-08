@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
         width: "90%",
         marginTop: 10,
         padding: 10,
-        height: 50,
         borderBottomWidth: 1,
-        borderBottomColor: "#f92e6a",
+        borderColor: "#f92e6a",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        overflow: "hidden"
     },
     buttonNewTask:{
         width: 60,
