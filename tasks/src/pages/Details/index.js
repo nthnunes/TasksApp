@@ -7,6 +7,7 @@ import styles from "./style"
 
 export default function Details({ navigation, route }){
     const [descriptionEdit, setDescriptionEdit] = useState(route.params.description)
+    const [titleEdit, setTitleEdit] = useState(route.params.title)
     const [height, setHeight] = useState(50)
     const idTask = route.params.id
     const database = firebase.firestore()
@@ -25,16 +26,24 @@ export default function Details({ navigation, route }){
 
     return(
         <View style={styles.container}>
-            <Text style={styles.label}>Description</Text>
+            <Text style={styles.label}>Say something about it</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Title Here"
+                onChangeText={setTitleEdit}
+                value={titleEdit}
+            />
             <TextInput
                 style={[styles.input, { height }]}
-                placeholder="Descrição da tarefa..."
+                placeholder="Description..."
                 onChangeText={setDescriptionEdit}
                 value={descriptionEdit}
                 multiline={true} // permite várias linhas de texto
                 onContentSizeChange={handleContentSizeChange} // atualiza a altura
                 scrollEnabled={false}
             />
+            <Text style={styles.create}>{route.params.create}</Text>
+            <Text style={styles.concluded}>{route.params.concluded}</Text>
             <TouchableOpacity
                 style={styles.buttonNewTask}
                 onPress={() => {

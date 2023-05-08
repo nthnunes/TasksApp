@@ -17,7 +17,8 @@ export default function Task({ navigation, route }){
 
     function deleteTask(id){
         database.collection(route.params.idUser).doc(id).update({
-            status: true
+            status: true,
+            concluded: new Date(Date.now()).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
         })
     }
 
@@ -69,12 +70,14 @@ export default function Task({ navigation, route }){
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         id: item.id,
+                                        title: item.title,
                                         description: item.description,
+                                        create: "Created in: " + item.create,
                                         idUser: route.params.idUser
                                     })
                                 }}
                             >
-                                {item.description}
+                                {item.title}
                             </Text>
                         </View>
                     )

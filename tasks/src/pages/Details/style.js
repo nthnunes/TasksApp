@@ -22,6 +22,20 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         overflow: "hidden"
     },
+    create: {
+        width: "100%",
+        marginTop: 35,
+        fontSize: 14,
+        textAlign: "center",
+        color: "#c9c9c9"
+    },
+    concluded: {
+        width: "100%",
+        marginTop: 10,
+        fontSize: 14,
+        textAlign: "center",
+        color: "#c9c9c9"
+    },
     buttonNewTask:{
         width: 60,
         height: 60,

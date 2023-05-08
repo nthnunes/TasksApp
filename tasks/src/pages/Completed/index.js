@@ -61,11 +61,15 @@ export default function Task({ navigation, route }){
                                 onPress={() => {
                                     navigation.navigate("Details", {
                                         id: item.id,
-                                        description: item.description
+                                        title: item.title,
+                                        description: item.description,
+                                        create: "Created in: " + item.create,
+                                        concluded: "Concluded in: " + item.concluded,
+                                        idUser: route.params.idUser
                                     })
                                 }}
                             >
-                                {item.description}
+                                {item.title}
                             </Text>
                         </View>
                     )
