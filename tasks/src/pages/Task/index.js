@@ -13,7 +13,6 @@ export default function Task({ navigation, route }){
     function logout(){
         firebase.auth().signOut().then(() => {
             navigation.navigate("Login")
-            setEmptyTasks(false)
         })
     }
 
@@ -35,8 +34,11 @@ export default function Task({ navigation, route }){
             if(list.length == 0){
                 setEmptyTasks(true)
             }
+            else{
+                setEmptyTasks(false)
+            }
         })
-    }, [])
+    }, [emptyTasks])
 
     return(
         <View style={styles.container}>
@@ -92,7 +94,6 @@ export default function Task({ navigation, route }){
                                             create: "Created in: " + item.create,
                                             idUser: route.params.idUser
                                         })
-                                        setEmptyTasks(false)
                                     }}
                                 >
                                     {item.title}
@@ -104,10 +105,7 @@ export default function Task({ navigation, route }){
             }
             <TouchableOpacity
                 style={styles.buttonCompleted}
-                onPress={() => {
-                    navigation.navigate("Completed", { idUser: route.params.idUser })
-                    setEmptyTasks(false)
-                }}
+                onPress={() => navigation.navigate("Completed", { idUser: route.params.idUser })}
             >
                 <FontAwesome
                     name="check"
@@ -117,10 +115,7 @@ export default function Task({ navigation, route }){
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buttonNewTask}
-                onPress={() => {
-                    navigation.navigate("New Task", { idUser: route.params.idUser })
-                    setEmptyTasks(false)
-                }}
+                onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
             >
                 <FontAwesome
                     name="plus"
