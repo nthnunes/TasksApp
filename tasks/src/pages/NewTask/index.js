@@ -23,7 +23,11 @@ export default function NewTask({ navigation, route }) {
 
   function handleContentSizeChange(event) {
     // atualiza a altura da entrada com base no tamanho do conteúdo
-    setHeight(event.nativeEvent.contentSize.height + 15);
+    if(Platform.OS != "ios"){
+      setHeight(event.nativeEvent.contentSize.height)
+    }else{
+      setHeight(event.nativeEvent.contentSize.height + 15)
+    }
   }
 
   return (
