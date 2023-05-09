@@ -12,6 +12,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginTop: 5
     },
+    contentAlert: {
+        marginTop: 150,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+      },
+      warningAlert: {
+          paddingLeft: 10,
+          color: "#bdbdbd",
+          fontSize: 16
+      },
     deleteTask:{
         justifyContent: "center",
         paddingLeft: 15,

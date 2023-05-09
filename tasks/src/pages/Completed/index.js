@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 
 import firebase from "../../config/firebaseconfig"
-import { FontAwesome } from "@expo/vector-icons"
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import styles from "./style"
 
 export default function Task({ navigation, route }){
     const [task, setTask] = useState([])
+    const [emptyTasks, setEmptyTasks] = useState("")
     const database = firebase.firestore()
 
     function clearAll() {
@@ -33,48 +34,67 @@ export default function Task({ navigation, route }){
                 list.push({...doc.data(), id: doc.id})
             })
             setTask(list)
+
+            if(list.length == 0){
+                setEmptyTasks(true)
+            }
+            else{
+                setEmptyTasks(false)
+            }
         })
-    }, [])
+    }, [emptyTasks])
 
     return(
         <View style={styles.container}>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={task}
-                renderItem={({ item }) => {
-                    return(
-                        <View style={styles.Tasks}>
-                            <TouchableOpacity
-                                style={styles.deleteTask}
-                                onPress={() => {
-                                    deleteTask(item.id)
-                                }}
-                            >
-                                <FontAwesome
-                                    name="check-square"
-                                    size={26}
-                                    color="#f92e6a"
-                                />
-                            </TouchableOpacity>
-                            <Text
-                                style={styles.DescriptionTask}
-                                onPress={() => {
-                                    navigation.navigate("Details", {
-                                        id: item.id,
-                                        title: item.title,
-                                        description: item.description,
-                                        create: "Created in: " + item.create,
-                                        concluded: "Concluded in: " + item.concluded,
-                                        idUser: route.params.idUser
-                                    })
-                                }}
-                            >
-                                {item.title}
-                            </Text>
-                        </View>
-                    )
-                }}
-            />
+            {emptyTasks === true
+            ?
+                <View style={styles.contentAlert}>
+                    <MaterialCommunityIcons
+                        name="check-circle"
+                        size={16}
+                        color="#bdbdbd"
+                    />
+                    <Text style={styles.warningAlert}>You haven't concluded tasks</Text>
+                </View>
+            :
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={task}
+                    renderItem={({ item }) => {
+                        return(
+                            <View style={styles.Tasks}>
+                                <TouchableOpacity
+                                    style={styles.deleteTask}
+                                    onPress={() => {
+                                        deleteTask(item.id)
+                                    }}
+                                >
+                                    <FontAwesome
+                                        name="check-square"
+                                        size={26}
+                                        color="#f92e6a"
+                                    />
+                                </TouchableOpacity>
+                                <Text
+                                    style={styles.DescriptionTask}
+                                    onPress={() => {
+                                        navigation.navigate("Details", {
+                                            id: item.id,
+                                            title: item.title,
+                                            description: item.description,
+                                            create: "Created in: " + item.create,
+                                            concluded: "Concluded in: " + item.concluded,
+                                            idUser: route.params.idUser
+                                        })
+                                    }}
+                                >
+                                    {item.title}
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+            }
             <TouchableOpacity
                 style={styles.buttonNewTask}
                 onPress={() => clearAll()}
