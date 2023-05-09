@@ -11,17 +11,22 @@ export default function Login({ navigation }){
     const [errorLogin, setErrorLogin] = useState("")
 
     const loginFirebase = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            let user = userCredential.user
-            navigation.navigate("Tasks", { idUser: user.uid })
-            setEmail("")
-            setPassword("")
-            setErrorLogin(false)
-        })
-        .catch(() => {
+        if(email == "" || password == ""){
             setErrorLogin(true)
-        })
+        }
+        else{
+            firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                let user = userCredential.user
+                navigation.navigate("Tasks", { idUser: user.uid })
+                setEmail("")
+                setPassword("")
+                setErrorLogin(false)
+            })
+            .catch(() => {
+                setErrorLogin(true)
+            })
+        }
     }
 
     useEffect(() => {
@@ -66,22 +71,12 @@ export default function Login({ navigation }){
             :
                 <View/>
             }
-                {email === "" || password === ""
-                ?
-                    <TouchableOpacity
-                        disabled={true}
-                        style={styles.buttonLogin}
-                    >
-                        <Text style={styles.textButtonLogin}>Login</Text>
-                    </TouchableOpacity>
-                :
-                    <TouchableOpacity
-                        style={styles.buttonLogin}
-                        onPress={loginFirebase}
-                    >
-                        <Text style={styles.textButtonLogin}>Login</Text>
-                    </TouchableOpacity>
-                }
+                <TouchableOpacity
+                    style={styles.buttonLogin}
+                    onPress={loginFirebase}
+                >
+                    <Text style={styles.textButtonLogin}>Login</Text>
+                </TouchableOpacity>
                 <Text style={styles.registration}>
                     Don't have an account?{' '}
                     <Text

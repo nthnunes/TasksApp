@@ -11,17 +11,22 @@ export default function NewUser({ navigation }){
     const [errorRegister, setErrorRegister] = useState("")
 
     const registerFirebase = () => {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            let user = userCredential.user
-            navigation.navigate("Login", { idUser: user.uid })
-            setEmail("")
-            setPassword("")
-            setErrorRegister(false)
-        })
-        .catch((error) => {
+        if(email == "" || password == ""){
             setErrorRegister(true)
-        })
+        }
+        else{
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                let user = userCredential.user
+                navigation.navigate("Login", { idUser: user.uid })
+                setEmail("")
+                setPassword("")
+                setErrorRegister(false)
+            })
+            .catch(() => {
+                setErrorRegister(true)
+            })
+        }
     }
 
     useEffect(() => {
@@ -62,22 +67,12 @@ export default function NewUser({ navigation }){
             :
                 <View/>
             }
-                {email === "" || password === ""
-                ?
-                    <TouchableOpacity
-                        disabled={true}
-                        style={styles.buttonLogin}
-                    >
-                        <Text style={styles.textButtonLogin}>Register</Text>
-                    </TouchableOpacity>
-                :
-                    <TouchableOpacity
-                        style={styles.buttonLogin}
-                        onPress={registerFirebase}
-                    >
-                        <Text style={styles.textButtonLogin}>Register</Text>
-                    </TouchableOpacity>
-                }
+                <TouchableOpacity
+                    style={styles.buttonLogin}
+                    onPress={registerFirebase}
+                >
+                    <Text style={styles.textButtonLogin}>Register</Text>
+                </TouchableOpacity>
                 <Text style={styles.registration}>
                     Already have an account?{' '}
                     <Text
