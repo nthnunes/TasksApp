@@ -19,6 +19,11 @@ export default function Details({ navigation, route }){
         navigation.navigate("Tasks", { idUser: route.params.idUser })
     }
 
+    function deleteTask(id){
+        database.collection(route.params.idUser).doc(id).delete()
+        navigation.goBack({ idUser: route.params.idUser })
+    }
+
     function handleContentSizeChange(event) {
         // atualiza a altura da entrada com base no tamanho do conteúdo
         if(Platform.OS != "ios"){
@@ -61,6 +66,18 @@ export default function Details({ navigation, route }){
                 >
                     <FontAwesome
                         name="check"
+                        size={26}
+                        color="#fff"
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonDeleteTask}
+                    onPress={() => {
+                        deleteTask(idTask)
+                    }}
+                >
+                    <FontAwesome
+                        name="trash"
                         size={26}
                         color="#fff"
                     />

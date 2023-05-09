@@ -47,6 +47,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    buttonDeleteTask:{
+        width: 60,
+        height: 60,
+        position: "absolute",
+        bottom: 60,
+        right: 35,
+        backgroundColor: "#f92e6a",
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center"
+    },
     iconButton:{
         color: "#fff",
         fontSize: 25,
