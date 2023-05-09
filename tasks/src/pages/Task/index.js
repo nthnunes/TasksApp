@@ -7,11 +7,13 @@ import styles from "./style"
 
 export default function Task({ navigation, route }){
     const [task, setTask] = useState([])
+    const [emptyTasks, setEmptyTasks] = useState("")
     const database = firebase.firestore()
 
     function logout(){
         firebase.auth().signOut().then(() => {
             navigation.navigate("Login")
+            setEmptyTasks(false)
         })
     }
 
@@ -29,6 +31,10 @@ export default function Task({ navigation, route }){
                 list.push({...doc.data(), id: doc.id})
             })
             setTask(list)
+            
+            if(list.length == 0){
+                setEmptyTasks(true)
+            }
         })
     }, [])
 
@@ -47,45 +53,61 @@ export default function Task({ navigation, route }){
                     />
                 </TouchableOpacity>
             </View>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={task}
-                renderItem={({ item }) => {
-                    return(
-                        <View style={styles.Tasks}>
-                            <TouchableOpacity
-                                style={styles.deleteTask}
-                                onPress={() => {
-                                    deleteTask(item.id)
-                                }}
-                            >
-                                <FontAwesome
-                                    name="square-o"
-                                    size={26}
-                                    color="#f92e6a"
-                                />
-                            </TouchableOpacity>
-                            <Text
-                                style={styles.DescriptionTask}
-                                onPress={() => {
-                                    navigation.navigate("Details", {
-                                        id: item.id,
-                                        title: item.title,
-                                        description: item.description,
-                                        create: "Created in: " + item.create,
-                                        idUser: route.params.idUser
-                                    })
-                                }}
-                            >
-                                {item.title}
-                            </Text>
-                        </View>
-                    )
-                }}
-            />
+            {emptyTasks === true
+            ?
+                <View style={styles.contentAlert}>
+                    <MaterialCommunityIcons
+                        name="check-circle"
+                        size={16}
+                        color="#bdbdbd"
+                    />
+                    <Text style={styles.warningAlert}>You haven't pending tasks</Text>
+                </View>
+            :
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={task}
+                    renderItem={({ item }) => {
+                        return(
+                            <View style={styles.Tasks}>
+                                <TouchableOpacity
+                                    style={styles.deleteTask}
+                                    onPress={() => {
+                                        deleteTask(item.id)
+                                    }}
+                                >
+                                    <FontAwesome
+                                        name="square-o"
+                                        size={26}
+                                        color="#f92e6a"
+                                    />
+                                </TouchableOpacity>
+                                <Text
+                                    style={styles.DescriptionTask}
+                                    onPress={() => {
+                                        navigation.navigate("Details", {
+                                            id: item.id,
+                                            title: item.title,
+                                            description: item.description,
+                                            create: "Created in: " + item.create,
+                                            idUser: route.params.idUser
+                                        })
+                                        setEmptyTasks(false)
+                                    }}
+                                >
+                                    {item.title}
+                                </Text>
+                            </View>
+                        )
+                    }}
+                />
+            }
             <TouchableOpacity
                 style={styles.buttonCompleted}
-                onPress={() => navigation.navigate("Completed", { idUser: route.params.idUser })}
+                onPress={() => {
+                    navigation.navigate("Completed", { idUser: route.params.idUser })
+                    setEmptyTasks(false)
+                }}
             >
                 <FontAwesome
                     name="check"
@@ -95,7 +117,10 @@ export default function Task({ navigation, route }){
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.buttonNewTask}
-                onPress={() => navigation.navigate("New Task", { idUser: route.params.idUser })}
+                onPress={() => {
+                    navigation.navigate("New Task", { idUser: route.params.idUser })
+                    setEmptyTasks(false)
+                }}
             >
                 <FontAwesome
                     name="plus"

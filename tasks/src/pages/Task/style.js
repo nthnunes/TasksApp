@@ -18,6 +18,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#f92e6a",
   },
+  contentAlert: {
+    marginTop: 150,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  warningAlert: {
+      paddingLeft: 10,
+      color: "#bdbdbd",
+      fontSize: 16
+  },
   Tasks:{
     width: "100%",
     flexDirection: "row",
