@@ -22,6 +22,17 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         overflow: "hidden"
     },
+    contentAlert: {
+        marginTop: 20,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    warningAlert: {
+        paddingLeft: 10,
+        color: "#bdbdbd",
+        fontSize: 16
+    },
     buttonNewTask:{
         width: 60,
         height: 60,

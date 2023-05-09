@@ -1,22 +1,28 @@
 import React, { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native"
 
-import { FontAwesome } from "@expo/vector-icons"
+import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import firebase from "../../config/firebaseconfig"
 import styles from "./style"
 
 export default function Details({ navigation, route }){
     const [descriptionEdit, setDescriptionEdit] = useState(route.params.description)
     const [titleEdit, setTitleEdit] = useState(route.params.title)
+    const [insertError, setInsertError] = useState("");
     const [height, setHeight] = useState(50)
     const idTask = route.params.id
     const database = firebase.firestore()
 
-    function editTask(description, id){
-        database.collection(route.params.idUser).doc(id).update({
-            description: description
-        })
-        navigation.navigate("Tasks", { idUser: route.params.idUser })
+    function editTask(title, description, id){
+        if(title == ""){
+            setInsertError(true)
+        }else{
+            database.collection(route.params.idUser).doc(id).update({
+                title: title,
+                description: description
+            })
+            navigation.goBack({ idUser: route.params.idUser })
+        }
     }
 
     function deleteTask(id){
@@ -58,10 +64,22 @@ export default function Details({ navigation, route }){
                 />
                 <Text style={styles.create}>{route.params.create}</Text>
                 <Text style={styles.concluded}>{route.params.concluded}</Text>
+                {insertError === true ? (
+                    <View style={styles.contentAlert}>
+                        <MaterialCommunityIcons
+                            name="alert-circle"
+                            size={24}
+                            color="#bdbdbd"
+                        />
+                        <Text style={styles.warningAlert}>Title can't be empty</Text>
+                    </View>
+                ) : (
+                    <View />
+                )}
                 <TouchableOpacity
                     style={styles.buttonNewTask}
                     onPress={() => {
-                        editTask(descriptionEdit, idTask)
+                        editTask(titleEdit, descriptionEdit, idTask)
                     }}
                 >
                     <FontAwesome

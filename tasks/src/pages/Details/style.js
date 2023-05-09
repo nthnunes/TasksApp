@@ -36,6 +36,17 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#c9c9c9"
     },
+    contentAlert: {
+        marginTop: 20,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    warningAlert: {
+        paddingLeft: 10,
+        color: "#bdbdbd",
+        fontSize: 16
+    },
     buttonNewTask:{
         width: 60,
         height: 60,
