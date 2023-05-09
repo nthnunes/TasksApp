@@ -28,13 +28,16 @@ export default function Task({ navigation, route }){
     }
 
     useEffect(() => {
-        database.collection(route.params.idUser).where("status", "==", true).onSnapshot((query) => {
-            const list = []
-            query.forEach((doc) => {
+        database.collection(route.params.idUser)
+            .where("status", "==", true)
+            .onSnapshot((query) => {
+                const list = []
+                query.forEach((doc) => {
                 list.push({...doc.data(), id: doc.id})
-            })
-            setTask(list)
-
+                })
+                list.sort((a, b) => new Date(a.create) - new Date(b.create))
+                setTask(list)
+            
             if(list.length == 0){
                 setEmptyTasks(true)
             }
