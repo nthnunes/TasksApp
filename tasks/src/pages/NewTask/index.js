@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Keyboard, View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import firebase from "../../config/firebaseconfig";
 import styles from "./style";
@@ -11,6 +11,28 @@ export default function NewTask({ navigation, route }) {
   const [height, setHeight] = useState(50); // altura inicial
 
   const database = firebase.firestore();
+
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+     const keyboardWillShowListener = Keyboard.addListener(
+       'keyboardWillShow',
+       () => {
+         setKeyboardVisible(true); // or some other action
+       }
+     );
+     const keyboardWillHideListener = Keyboard.addListener(
+       'keyboardWillHide',
+       () => {
+         setKeyboardVisible(false); // or some other action
+       }
+     );
+ 
+     return () => {
+       keyboardWillHideListener.remove();
+       keyboardWillShowListener.remove();
+     };
+   }, []);
 
   function addTask() {
     if(title == ""){
@@ -69,14 +91,14 @@ export default function NewTask({ navigation, route }) {
         ) : (
           <View />
         )}
-        <TouchableOpacity
-          style={styles.buttonNewTask}
-          onPress={() => {
-            addTask();
-          }}
-        >
-          <FontAwesome name="check" size={26} color="#fff" />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.buttonNewTask, { transform: [{ translateY: isKeyboardVisible ? -50 : 0 }] }]}
+            onPress={() => {
+              addTask();
+            }}
+          >
+            <FontAwesome name="check" size={26} color="#fff" />
+          </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );

@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native"
+import React, { useState, useEffect } from "react"
+import { Keyboard, View, Text, TextInput, TouchableOpacity, Platform, KeyboardAvoidingView } from "react-native"
 
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons"
 import firebase from "../../config/firebaseconfig"
@@ -12,6 +12,28 @@ export default function Details({ navigation, route }){
     const [height, setHeight] = useState(50)
     const idTask = route.params.id
     const database = firebase.firestore()
+
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardWillShowListener = Keyboard.addListener(
+            'keyboardWillShow',
+            () => {
+                setKeyboardVisible(true); // or some other action
+            }
+        );
+        const keyboardWillHideListener = Keyboard.addListener(
+            'keyboardWillHide',
+            () => {
+                setKeyboardVisible(false); // or some other action
+            }
+        );
+
+        return () => {
+            keyboardWillHideListener.remove();
+            keyboardWillShowListener.remove();
+        };
+    }, []);
 
     function editTask(title, description, id){
         if(title == ""){
@@ -77,7 +99,7 @@ export default function Details({ navigation, route }){
                     <View />
                 )}
                 <TouchableOpacity
-                    style={styles.buttonNewTask}
+                    style={[styles.buttonNewTask, { transform: [{ translateY: isKeyboardVisible ? -50 : 0 }] }]}
                     onPress={() => {
                         editTask(titleEdit, descriptionEdit, idTask)
                     }}
@@ -89,7 +111,7 @@ export default function Details({ navigation, route }){
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.buttonDeleteTask}
+                    style={[styles.buttonDeleteTask, { transform: [{ translateY: isKeyboardVisible ? -50 : 0 }] }]}
                     onPress={() => {
                         deleteTask(idTask)
                     }}
