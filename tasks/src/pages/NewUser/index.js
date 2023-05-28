@@ -11,7 +11,12 @@ export default function NewUser({ navigation }){
     const [errorRegister, setErrorRegister] = useState("")
 
     const registerFirebase = () => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/g;
+
         if(email == "" || password == ""){
+            setErrorRegister(true)
+        }
+        else if(password.match(regex) == null) {
             setErrorRegister(true)
         }
         else{
